@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import tensorflow as tf
 import random,os
 
 def view_random_image(target_dir, target_class):
