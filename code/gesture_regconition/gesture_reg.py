@@ -110,7 +110,8 @@ class gesture_regcognize():
             interrupt = cv2.waitKey(1)
             if interrupt & 0xFF == 27:  # esc key
                 break
-            if interrupt == ord('c'): self.key_pressed = True
+            if interrupt == ord('d'): self.predicted_string = self.predicted_string[:-1] # delete the latest character
+            if interrupt == ord('c'): self.key_pressed = True #start the pred
             if interrupt == ord('s'): self.activate_text_to_speech=True # run the text to speech
             if interrupt == ord('r'): self.predicted_string = ""  # reset the entire string
         cap.release()
