@@ -6,4 +6,4 @@ keras==2.6.0
 pyqt5
 pyttsx3
 webbrowser
-sqlite
+pysqlite
