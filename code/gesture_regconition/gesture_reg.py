@@ -1,6 +1,6 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
-import cv2
+import cv2, pyttsx3
 class gesture_regcognize():
     def __init__(self):
         self.x1, self.y1 = 5, 5
@@ -11,7 +11,9 @@ class gesture_regcognize():
         self.previous_text = ""
         self.predicted_string = ""
         self.key_pressed = False
-
+        self.predicted_text = ""
+        self.activate_text_to_speech = False
+        self.reset_predicted_string = False
     def preprocess_data(self):
         self.datagen = ImageDataGenerator(rescale=1 / 255.,
                                           samplewise_center=True,
@@ -31,6 +33,13 @@ class gesture_regcognize():
         prediction_probability = prediction[0, prediction.argmax()]
         return predicted_class,prediction_probability
 
+    def text_to_speech(self,text):
+        engine = pyttsx3.init()
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice',voices[0].id)
+        engine.setProperty('rate',150)
+        engine.say(text)
+        engine.runAndWait()
     def run_function(self,model):
         ####
         self.preprocess_data()
@@ -63,16 +72,37 @@ class gesture_regcognize():
             blackboard = np.zeros(frame.shape, dtype=np.uint8)
             cv2.putText(blackboard, "Hand Gestures to Text", (30, 40), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 255))
             # Predicting the frame.
-            self.predicted_text, self.predicted_prob = self.predict_function(model)
+            #self.predicted_text, self.predicted_prob = self.predict_function(model)
 
-            if self.predicted_prob > 0.5:
-                # High pred prob.
-                cv2.putText(blackboard, '{} - {:.2f}%'.format(self.predicted_text, self.predicted_prob * 100),
-                            (30, 100), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 255))
-            elif self.predicted_prob > 0.2 and self.predicted_prob <= 0.5:
-                # Low pred prob.
-                cv2.putText(blackboard, 'Maybe {}... - {:.2f}%'.format(self.predicted_text, self.predicted_prob * 100),
-                            (30, 100), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 255))
+            if self.timer > 20 and self.predicted_text not in self.labels[26:-1]:
+                if self.predicted_text == 'space':
+                    self.predicted_string += " "
+                else: self.predicted_string += self.predicted_text
+                self.timer = 0
+
+            if self.key_pressed:
+                self.previous_text = self.predicted_text
+                # Predicting the frame.
+                self.predicted_text, self.predicted_prob = self.predict_function(model)
+                if self.predicted_prob > 0.5:
+                    # High pred prob.
+                    cv2.putText(blackboard, '{} - {:.2f}%'.format(self.predicted_text, self.predicted_prob * 100),
+                                (30, 300), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 255))
+                elif self.predicted_prob > 0.2 and self.predicted_prob <= 0.5:
+                    # Low pred prob.
+                    cv2.putText(blackboard,
+                                'Maybe {}... - {:.2f}%'.format(self.predicted_text, self.predicted_prob * 100),
+                                (30, 300), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 255))
+
+                if self.previous_text == self.predicted_text:
+                    self.timer += 1
+                else:
+                    self.timer = 0
+                cv2.putText(blackboard, self.predicted_string, (30, 80), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 127))
+            ## activate text to speech
+            if self.activate_text_to_speech:
+                self.text_to_speech(self.predicted_string)
+                self.activate_text_to_speech=False
 
             res = np.hstack((frame, blackboard))
             cv2.imshow("Camera", res)
@@ -80,6 +110,8 @@ class gesture_regcognize():
             interrupt = cv2.waitKey(1)
             if interrupt & 0xFF == 27:  # esc key
                 break
-            #if interrupt == ord('c'): key_pressed = True
+            if interrupt == ord('c'): self.key_pressed = True
+            if interrupt == ord('s'): self.activate_text_to_speech=True # run the text to speech
+            if interrupt == ord('r'): self.predicted_string = ""  # reset the entire string
         cap.release()
         cv2.destroyAllWindows()
