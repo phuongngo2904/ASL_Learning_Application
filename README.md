@@ -1,5 +1,5 @@
 # ASL Learning Application
-![alt text] https://github.com/phuongngo2904/ASL_Learning_Application/blob/2ff6851f9439dfb8cd90a7b534d543f52461b779/code/images/mainwindow.png
+![alt text] (https://github.com/phuongngo2904/ASL_Learning_Application/blob/2ff6851f9439dfb8cd90a7b534d543f52461b779/code/images/mainwindow.png)
 # 1. Install pip and python
 * Make sure you already have pip and python installed in your computer<br />
 
