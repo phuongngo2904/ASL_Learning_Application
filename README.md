@@ -1,4 +1,4 @@
-# Senior Project - Sign Language Translator
+# ASL Learning Application
 
 # 1. Install pip and python
 * Make sure you already have pip and python installed in your computer<br />
@@ -33,11 +33,11 @@ git config -h
 ```
 * Clone the project:
 ```
-git clone https://github.com/phuongngo2904/Senior_Project.git
+git clone https://github.com/phuongngo2904/ASL_Learning_Application.git
 ```
 * Navigate to this project 
 ```
-cd Senior_Project
+cd ASL_Learning_Application
 ```
 # 3.  Install requirements
 ```
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ```
 # 4. Run the real time recognition
 ```
-cd code
+cd code/gesture_regconition
 python real_time_detection.py
 ```
 # Reference 
