@@ -1,0 +1,7 @@
+tensorflow==2.4.1
+numpy==1.19.5
+mega.py
+opencv-python
+keras==2.6.0
+google-cloud-texttospeech==2.5.2
+pyttsx3
