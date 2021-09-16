@@ -63,7 +63,7 @@ pip install -r requirements.txt
 ```
 # 4. Run the GUI
 ```
-cd code/gesture_regconition
+cd code
 python log_in_app.py
 ```
 # Reference 
