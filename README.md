@@ -61,7 +61,7 @@ cd ASL_Learning_Application
 ```
 pip install -r requirements.txt
 ```
-# 4. Run the real time recognition
+# 4. Run the GUI
 ```
 cd code/gesture_regconition
 python log_in_app.py
