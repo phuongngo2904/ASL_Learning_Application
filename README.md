@@ -64,7 +64,7 @@ pip install -r requirements.txt
 # 4. Run the real time recognition
 ```
 cd code/gesture_regconition
-python real_time_detection.py
+python log_in_app.py
 ```
 # Reference 
 * Dataset: https://www.kaggle.com/grassknoted/asl-alphabet
