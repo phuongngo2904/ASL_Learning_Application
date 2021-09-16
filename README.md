@@ -1,4 +1,4 @@
-# ASL Learning Application
+# ASL Learning Application -- Window version
 
 # 1. Install pip, python and virtualenv
 * Make sure you already have pip and python installed in your computer<br />
