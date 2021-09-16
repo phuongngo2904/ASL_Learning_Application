@@ -5,5 +5,4 @@ opencv-python
 keras==2.6.0
 pyqt5
 pyttsx3
-webbrowser
 pysqlite3
