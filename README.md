@@ -57,7 +57,7 @@ git clone https://github.com/phuongngo2904/ASL_Learning_Application.git
 ```
 cd ASL_Learning_Application
 ```
-# 3.  Install requirements
+# 3.  Install all requirements
 ```
 pip install -r requirements.txt
 ```
